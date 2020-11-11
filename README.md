@@ -91,7 +91,7 @@ All the [dashboard](https://docs.newrelic.com/docs/query-your-data/explore-query
 
 
 
-#### Adding wigets / visualizations
+#### Adding widgets / visualizations
 
 The first step to designing your dashboard is to define what you’re trying to achieve and which visualizations would be helpful for that.  The main goal of this dashboard example is to give you an overview of all your applications healthinesses without the need to deep into tons of log lines searching for problematic severities.
 
@@ -382,7 +382,7 @@ The New Relic Terraform provider supports all required alerting resources to mon
 
 For this specific example, we could reuse the dashboard queries and define the following [NRQL alert conditions](https://registry.terraform.io/providers/newrelic/newrelic/latest/docs/resources/nrql_alert_condition):
 
-- An static threshold alarm for critical severities `Error(3)`, `Critical(2)`, `Alert(1)` and `Emergency(0)`.
+- A static threshold alarm for critical severities `Error(3)`, `Critical(2)`, `Alert(1)` and `Emergency(0)`.
 - [Baseline](https://docs.newrelic.com/docs/alerts-applied-intelligence/new-relic-alerts/alert-conditions/create-baseline-alert-conditions) alarm in [upper](https://docs.newrelic.com/docs/alerts-applied-intelligence/new-relic-alerts/alert-conditions/create-baseline-alert-conditions#upper-lower) direction for log counters with `severity < 4` to detect abnormal unhealthy spikes.
 - What else? The possibilities are huge and it depends on your environment and system characteristics, maybe a static alert for logs with `severity < 4` and facility equals to `security/authorization messages(4)` sending all notification messages to the `#security-team` slack channel would be better for you than sending it to every people in the office. All in all, the New Relic alerting system is quite flexible and does support complex scenarios you might have. 
 
