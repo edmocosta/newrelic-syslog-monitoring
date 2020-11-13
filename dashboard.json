@@ -1,184 +1,176 @@
 {
   "title": "Syslog Dashboard",
-  "icon": "line-chart",
+  "icon": "bar-chart",
   "grid_column_count": 12,
   "dashboard_account_id": <YOUR_ACCOUNT_ID>,
-  "widgets": [
-    {
-      "title": "",
-      "nrql": "SELECT\n  count(*) as 'Emergency (0)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 0\n",
-      "process_as": "billboard",
-      "width": 1,
-      "height": 1,
-      "row": 1,
-      "column": 1,
-      "customizations": {
-        "thresholds": {
-          "critical": 1
-        }
+  "widgets": [{
+    "title": "",
+    "nrql": "SELECT\n  count(*) as 'Emergency (0)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 0\n",
+    "process_as": "billboard",
+    "width": 1,
+    "height": 1,
+    "row": 1,
+    "column": 1,
+    "customizations": {
+      "thresholds": {
+        "critical": 1
       }
-    },
-    {
-      "title": "",
-      "nrql": "SELECT\n  count(*) as 'Critical (2)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 2\n",
-      "process_as": "billboard",
-      "width": 1,
-      "height": 1,
-      "row": 1,
-      "column": 2,
-      "customizations": {
-        "thresholds": {
-          "critical": 1
-        }
-      }
-    },
-    {
-      "title": "",
-      "nrql": "SELECT\n  count(*) as 'Warning (4)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 4\n",
-      "process_as": "billboard",
-      "width": 1,
-      "height": 1,
-      "row": 1,
-      "column": 3,
-      "customizations": {
-        "thresholds": {}
-      }
-    },
-    {
-      "title": "",
-      "nrql": "SELECT\n  count(*) as 'Informational (6)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 6\n",
-      "process_as": "billboard",
-      "width": 1,
-      "height": 1,
-      "row": 1,
-      "column": 4,
-      "customizations": {
-        "thresholds": {}
-      }
-    },
-    {
-      "title": "Throughput",
-      "nrql": "SELECT\n  rate(count(*), 1 minute) as 'Logs /min',\n  count(*) as 'Total'\nFROM Log \nWHERE logType = 'syslog-rfc5424' SINCE 1 hour ago\n",
-      "process_as": "attribute_sheet",
-      "width": 2,
-      "height": 2,
-      "row": 1,
-      "column": 5
-    },
-    {
-      "title": "Top Applications",
-      "nrql": "SELECT\n  count(*)\nFROM Log\nWHERE logType = 'syslog-rfc5424'\nFACET app.name\n",
-      "process_as": "facet_bar_chart",
-      "width": 2,
-      "height": 8,
-      "row": 1,
-      "column": 7,
-      "customizations": {
-        "drilldown": {}
-      }
-    },
-    {
-      "title": "Top Nodes",
-      "nrql": "SELECT\n  count(*) as 'Logs'\nFROM Log\nWHERE logType = 'syslog-rfc5424'\nFACET hostname\n",
-      "process_as": "facet_bar_chart",
-      "width": 2,
-      "height": 8,
-      "row": 1,
-      "column": 9,
-      "facet": null,
-      "customizations": {
-        "drilldown": {}
-      }
-    },
-    {
-      "title": "",
-      "width": 2,
-      "height": 8,
-      "row": 1,
-      "column": 11,
-      "agent_ids": [],
-      "customizations": {
-        "markdown": "### Facilities\n0. kernel messages\n1. user-level messages\n2. mail system\n3. system daemons\n4. security/authorization messages (note 1)\n5. messages generated internally by syslogd\n6. line printer subsystem\n7. network news subsystem\n8. UUCP subsystem\n9. clock daemon (note 2)\n10. security/authorization messages (note 1)\n11. FTP daemon\n12. NTP subsystem\n13. log audit (note 1)\n14. log alert (note 1)\n15. clock daemon (note 2)\n16. local use 0  (local0)\n17. local use 1  (local1)\n18. local use 2  (local2)\n19. local use 3  (local3)\n20. local use 4  (local4)\n21. local use 5  (local5)\n22. local use 6  (local6)\n23. local use 7  (local7)\n"
-      }
-    },
-    {
-      "title": "",
-      "nrql": "SELECT\n  count(*) as 'Alert (1)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 1\n",
-      "process_as": "billboard",
-      "width": 1,
-      "height": 1,
-      "row": 2,
-      "column": 1,
-      "customizations": {
-        "thresholds": {
-          "critical": 1
-        }
-      }
-    },
-    {
-      "title": "",
-      "nrql": "SELECT\n  count(*) as 'Error (3)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 3\n",
-      "process_as": "billboard",
-      "width": 1,
-      "height": 1,
-      "row": 2,
-      "column": 2,
-      "customizations": {
-        "thresholds": {
-          "warning": 1
-        }
-      }
-    },
-    {
-      "title": "",
-      "nrql": "SELECT\n  count(*) as 'Notice (5)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 5\n",
-      "process_as": "billboard",
-      "width": 1,
-      "height": 1,
-      "row": 2,
-      "column": 3,
-      "customizations": {
-        "thresholds": {}
-      }
-    },
-    {
-      "title": "",
-      "nrql": "SELECT\n  count(*) as 'Debug (7)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 7\n",
-      "process_as": "billboard",
-      "width": 1,
-      "height": 1,
-      "row": 2,
-      "column": 4,
-      "customizations": {
-        "thresholds": {}
-      }
-    },
-    {
-      "title": "Logs (Emergency + Alert + Critical + Error)",
-      "nrql": "SELECT\n  count(*)\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) < 4\nTIMESERIES AUTO\n",
-      "process_as": "line_chart",
-      "width": 6,
-      "height": 3,
-      "row": 3,
-      "column": 1
-    },
-    {
-      "title": "Logs by Severity",
-      "nrql": "SELECT\n  count(*)\nFROM Log\nWHERE logType = 'syslog-rfc5424'\nFACET string((numeric(pri) - (floor(numeric(pri)/8) * 8))) as 'Severity'\nTIMESERIES AUTO\n",
-      "process_as": "faceted_line_chart",
-      "width": 3,
-      "height": 3,
-      "row": 6,
-      "column": 1
-    },
-    {
-      "title": "Logs by Facility",
-      "nrql": "SELECT\n  count(*)\nFROM Log\nWHERE logType = 'syslog-rfc5424'\nFACET floor(numeric(pri)/8) as 'Facility'\nTIMESERIES AUTO\n",
-      "process_as": "faceted_line_chart",
-      "width": 3,
-      "height": 3,
-      "row": 6,
-      "column": 4
     }
-  ]
+  }, {
+    "title": "",
+    "nrql": "SELECT\n  count(*) as 'Critical (2)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 2\n",
+    "process_as": "billboard",
+    "width": 1,
+    "height": 1,
+    "row": 1,
+    "column": 2,
+    "customizations": {
+      "thresholds": {
+        "critical": 1
+      }
+    }
+  }, {
+    "title": "",
+    "nrql": "SELECT\n  count(*) as 'Warning (4)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 4\n",
+    "process_as": "billboard",
+    "width": 1,
+    "height": 1,
+    "row": 1,
+    "column": 3,
+    "customizations": {
+      "thresholds": {}
+    }
+  }, {
+    "title": "",
+    "nrql": "SELECT\n  count(*) as 'Informational (6)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 6\n",
+    "process_as": "billboard",
+    "width": 1,
+    "height": 1,
+    "row": 1,
+    "column": 4,
+    "customizations": {
+      "thresholds": {}
+    }
+  }, {
+    "title": "Throughput",
+    "nrql": "SELECT\n  rate(count(*), 1 minute) as 'Logs /min',\n  count(*) as 'Total'\nFROM Log \nWHERE logType = 'syslog-rfc5424' SINCE 1 hour ago\n",
+    "process_as": "attribute_sheet",
+    "width": 2,
+    "height": 2,
+    "row": 1,
+    "column": 5
+  }, {
+    "title": "Top Applications",
+    "nrql": "SELECT\n  count(*)\nFROM Log\nWHERE logType = 'syslog-rfc5424'\nFACET app.name\n",
+    "process_as": "facet_bar_chart",
+    "width": 2,
+    "height": 5,
+    "row": 1,
+    "column": 7,
+    "customizations": {
+      "drilldown": {}
+    }
+  }, {
+    "title": "Top Nodes",
+    "nrql": "SELECT\n  count(*) as 'Logs'\nFROM Log\nWHERE logType = 'syslog-rfc5424'\nFACET hostname\n",
+    "process_as": "facet_bar_chart",
+    "width": 2,
+    "height": 5,
+    "row": 1,
+    "column": 9,
+    "customizations": {
+      "drilldown": {}
+    }
+  }, {
+    "title": "",
+    "nrql": null,
+    "width": 2,
+    "height": 5,
+    "row": 1,
+    "column": 11,
+    "agent_ids": [],
+    "customizations": {
+      "markdown": "### Facilities\n0. kernel messages\n1. user-level messages\n2. mail system\n3. system daemons\n4. security/authorization messages (note 1)\n5. messages generated internally by syslogd\n6. line printer subsystem\n7. network news subsystem\n8. UUCP subsystem\n9. clock daemon (note 2)\n10. security/authorization messages (note 1)\n11. FTP daemon\n12. NTP subsystem\n13. log audit (note 1)\n14. log alert (note 1)\n15. clock daemon (note 2)\n16. to 23. local uses 0 to 7 (local n)\n"
+    }
+  }, {
+    "title": "",
+    "nrql": "SELECT\n  count(*) as 'Alert (1)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 1\n",
+    "process_as": "billboard",
+    "width": 1,
+    "height": 1,
+    "row": 2,
+    "column": 1,
+    "customizations": {
+      "thresholds": {
+        "critical": 1
+      }
+    }
+  }, {
+    "title": "",
+    "nrql": "SELECT\n  count(*) as 'Error (3)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 3\n",
+    "process_as": "billboard",
+    "width": 1,
+    "height": 1,
+    "row": 2,
+    "column": 2,
+    "customizations": {
+      "thresholds": {
+        "warning": 1
+      }
+    }
+  }, {
+    "title": "",
+    "nrql": "SELECT\n  count(*) as 'Notice (5)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 5\n",
+    "process_as": "billboard",
+    "width": 1,
+    "height": 1,
+    "row": 2,
+    "column": 3,
+    "customizations": {
+      "thresholds": {}
+    }
+  }, {
+    "title": "",
+    "nrql": "SELECT\n  count(*) as 'Debug (7)'\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) = 7\n",
+    "process_as": "billboard",
+    "width": 1,
+    "height": 1,
+    "row": 2,
+    "column": 4,
+    "customizations": {
+      "thresholds": {}
+    }
+  }, {
+    "title": "Logs (Emergency + Alert + Critical + Error)",
+    "nrql": "SELECT\n  count(*)\nFROM Log\nWHERE logType = 'syslog-rfc5424' AND (numeric(pri) - (floor(numeric(pri)/8) * 8)) < 4\nTIMESERIES AUTO\n",
+    "process_as": "line_chart",
+    "width": 6,
+    "height": 3,
+    "row": 3,
+    "column": 1
+  }, {
+    "title": "Logs by Severity",
+    "nrql": "SELECT\n  count(*)\nFROM Log\nWHERE logType = 'syslog-rfc5424'\nFACET string((numeric(pri) - (floor(numeric(pri)/8) * 8))) as 'Severity'\nTIMESERIES AUTO\n",
+    "process_as": "faceted_line_chart",
+    "width": 3,
+    "height": 3,
+    "row": 6,
+    "column": 1
+  }, {
+    "title": "Logs by Facility",
+    "nrql": "SELECT\n  count(*)\nFROM Log\nWHERE logType = 'syslog-rfc5424'\nFACET floor(numeric(pri)/8) as 'Facility'\nTIMESERIES AUTO\n",
+    "process_as": "faceted_line_chart",
+    "width": 3,
+    "height": 3,
+    "row": 6,
+    "column": 4
+  }, {
+    "title": "Top 100 Logs",
+    "nrql": "SELECT\n    (numeric(pri) - (floor(numeric(pri)/8) * 8)) as 'Severity',\n    app.name as 'Application',\n    message\nFROM Log\nWHERE logType = 'syslog-rfc5424' LIMIT 100\n",
+    "process_as": "event_table",
+    "width": 6,
+    "height": 3,
+    "row": 6,
+    "column": 7
+  }]
 }

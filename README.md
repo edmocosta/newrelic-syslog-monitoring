@@ -297,16 +297,43 @@ The idea behind these charts is to display how many logs by severity and facilit
 
 
 
+##### Event table to display the Top 100 Logs
+
+```hcl
+  widget {
+    title         = "Top 100 Logs"
+    nrql          = <<-EOF
+      SELECT
+          ${local.severity} as 'Severity',
+          app.name as 'Application',
+          message
+      FROM Log
+      WHERE logType = '${local.syslog}' LIMIT 100
+    EOF
+    column        = 7
+    row           = 6
+    visualization = "event_table"
+    width         = 6
+    height        = 3
+  }
+```
+
+###### Final result
+
+![Image](./images/top_100_logs.png)
+
+
+
 ##### Markdown summary for Syslog Facilities
 
 ```hcl
  widget {
-    title         = ""
-    width         = 2
-    height        = 8
-    row           = 1
-    column        = 11
-    source        = <<-EOF
+    title  = ""
+    width  = 2
+    height = 5
+    row    = 1
+    column = 11
+    source = <<-EOF
     ### Facilities
     0. kernel messages
     1. user-level messages
@@ -324,14 +351,7 @@ The idea behind these charts is to display how many logs by severity and facilit
     13. log audit (note 1)
     14. log alert (note 1)
     15. clock daemon (note 2)
-    16. local use 0  (local0)
-    17. local use 1  (local1)
-    18. local use 2  (local2)
-    19. local use 3  (local3)
-    20. local use 4  (local4)
-    21. local use 5  (local5)
-    22. local use 6  (local6)
-    23. local use 7  (local7)
+    16. to 23. local uses 0 to 7 (local n)
     EOF
     visualization = "markdown"
   }
